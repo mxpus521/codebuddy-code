@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>文档 - CodeBuddy Code</title>
+  <meta name="description" content="CodeBuddy Code 完整使用文档，包含安装、配置、命令参考等详细信息">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="flag"></div>
+  
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">CB</div>
+        <span>CodeBuddy Code</span>
+      </div>
+      <nav>
+        <a href="index.html">首页</a>
+        <a class="active" href="docs.html">文档</a>
+        <a href="slash.html">斜杠命令</a>
+        <a href="support.html">支持与安全</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="section">
+      <h2>📦 安装</h2>
+      <div class="install-box">
+        <h3>全局安装</h3>
+        <pre><code>npm install -g @tencent-ai/codebuddy-code</code></pre>
+      </div>
+      <p>需要 Node.js 18+ 版本支持。</p>
+    </div>
+
+    <div class="section">
+      <h2>🚀 使用</h2>
+      <p>在任意项目目录下运行：</p>
+      <pre><code>codebuddy</code></pre>
+      <p>首次使用需要进行身份认证，按照提示完成登录即可。</p>
+    </div>
+
+    <div class="section">
+      <h2>📖 命令参考</h2>
+      
+      <h3>基本用法</h3>
+      <pre><code>codebuddy [选项] [命令] [提示词]</code></pre>
+      
+      <h3>主要选项</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>选项</th>
+            <th>描述</th>
+            <th>示例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>codebuddy</code></td>
+            <td>启动交互式会话（默认）</td>
+            <td><code>codebuddy</code></td>
+          </tr>
+          <tr>
+            <td><code>codebuddy [提示词]</code></td>
+            <td>执行单次任务</td>
+            <td><code>codebuddy "修复这个 bug"</code></td>
+          </tr>
+          <tr>
+            <td><code>-p, --print</code></td>
+            <td>打印响应并退出（非交互式）</td>
+            <td><code>codebuddy -p "解释这个函数"</code></td>
+          </tr>
+          <tr>
+            <td><code>-c, --continue</code></td>
+            <td>继续最近的对话</td>
+            <td><code>codebuddy -c</code></td>
+          </tr>
+          <tr>
+            <td><code>-r, --resume [会话ID]</code></td>
+            <td>恢复指定对话</td>
+            <td><code>codebuddy -r</code></td>
+          </tr>
+          <tr>
+            <td><code>--model &lt;模型&gt;</code></td>
+            <td>指定使用的模型</td>
+            <td><code>codebuddy --model sonnet</code></td>
+          </tr>
+          <tr>
+            <td><code>--ide</code></td>
+            <td>启动时自动连接 IDE</td>
+            <td><code>codebuddy --ide</code></td>
+          </tr>
+          <tr>
+            <td><code>-d, --debug</code></td>
+            <td>启用调试模式</td>
+            <td><code>codebuddy -d</code></td>
+          </tr>
+          <tr>
+            <td><code>-h, --help</code></td>
+            <td>显示帮助信息</td>
+            <td><code>codebuddy -h</code></td>
+          </tr>
+          <tr>
+            <td><code>-V, --version</code></td>
+            <td>显示版本信息</td>
+            <td><code>codebuddy -V</code></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h3>子命令</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>命令</th>
+            <th>描述</th>
+            <th>示例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>config</code></td>
+            <td>管理配置</td>
+            <td><code>codebuddy config set -g theme dark</code></td>
+          </tr>
+          <tr>
+            <td><code>mcp</code></td>
+            <td>配置和管理 MCP 服务器</td>
+            <td><code>codebuddy mcp</code></td>
+          </tr>
+          <tr>
+            <td><code>doctor</code></td>
+            <td>检查系统健康状态</td>
+            <td><code>codebuddy doctor</code></td>
+          </tr>
+          <tr>
+            <td><code>update</code></td>
+            <td>检查并安装更新</td>
+            <td><code>codebuddy update</code></td>
+          </tr>
+          <tr>
+            <td><code>install</code></td>
+            <td>安装原生构建版本</td>
+            <td><code>codebuddy install stable</code></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="card" style="margin-top: 24px; background: #fef3c7; border-color: #f59e0b;">
+        <h3 style="color: #92400e; margin-top: 0;">⚠️ 注意</h3>
+        <p style="margin-bottom: 0; color: #92400e;">部分子命令可能尚未支持，具体功能请以实际版本为准。</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-flag"></div>
+    <div class="container">
+      <div class="ukraine-statement">
+        <h4>🇺🇦 支持乌克兰，谴责侵略</h4>
+        <p>我们坚决支持乌克兰人民，强烈谴责俄罗斯的非法侵略战争和在乌克兰犯下的战争罪行。和平、主权和国际法必须得到尊重。</p>
+      </div>
+      <p>© 2025 Tencent Cloud • 由腾讯云团队开发维护</p>
+    </div>
+  </footer>
+</body>
+</html>
