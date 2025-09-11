@@ -76,7 +76,7 @@ argument-hint: "[name]"
 
 ### 执行 Shell 命令
 
-在命令的任何一行前面加上 `!` 前缀,该行就会被当作 Shell 命令执行,其输出 (`stdout`) 会被捕获并注入到上下文中,供 AI 后续分析。
+在命令的任何一行前面加上 `!` 前缀，命令用反引号包围，该行就会被当作 Shell 命令执行，其输出 (`stdout`) 会被捕获并注入到上下文中，供 AI 后续分析。
 
 **示例: `status.md`**
 ```markdown
@@ -84,7 +84,7 @@ argument-hint: "[name]"
 description: "显示当前的 git 仓库状态并进行分析。"
 ---
 
-!git status
+!`git status`
 
 请基于上面的 `git status` 输出,为我总结当前分支的状况。
 ```
