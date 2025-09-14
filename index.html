@@ -5,45 +5,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CodeBuddy Code - 腾讯云智能编码工具</title>
   <meta name="description" content="CodeBuddy Code 是腾讯云官方智能编程助手，深度集成开发环境，通过自然语言交互提升编程效率">
+  <meta name="keywords" content="AI编程,智能编码,腾讯云,代码助手,开发工具">
+  <meta name="author" content="腾讯云">
+  <meta property="og:title" content="CodeBuddy Code - 腾讯云智能编码工具">
+  <meta property="og:description" content="深度集成开发环境，通过自然语言交互提升编程效率">
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="flag"></div>
   
   <header>
     <div class="header-content">
-      <div class="logo">
+      <a href="index.html" class="logo">
         <div class="logo-icon">CB</div>
         <span>CodeBuddy Code</span>
-      </div>
+      </a>
       <nav>
         <a class="active" href="index.html">首页</a>
         <a href="docs.html">文档</a>
         <a href="slash.html">斜杠命令</a>
         <a href="support.html">支持与安全</a>
       </nav>
+      <button class="theme-toggle" onclick="toggleTheme()" data-tooltip="切换主题">
+        <span id="theme-icon">🌙</span>
+      </button>
     </div>
   </header>
 
   <section class="hero">
+    <div class="hero-floating">💻</div>
+    <div class="hero-floating">🚀</div>
+    <div class="hero-floating">⚡</div>
     <div class="container">
-      <h1>智能编程助手</h1>
-      <p>深度集成开发环境，理解项目结构，通过自然语言交互自动化任务、解析代码逻辑、优化开发工作流程</p>
+      <h1 class="animate-fade-in">智能编程助手</h1>
+      <p class="animate-slide-up">深度集成开发环境，理解项目结构，通过自然语言交互自动化任务、解析代码逻辑、优化开发工作流程</p>
+      <div class="hero-cta animate-scale-in">
+        <a href="#quick-start" class="hero-btn primary">
+          🚀 立即开始
+        </a>
+        <a href="docs.html" class="hero-btn">
+          📖 查看文档
+        </a>
+      </div>
     </div>
   </section>
 
   <main class="container">
-    <div class="install-box quick-start">
+    <div id="quick-start" class="install-box quick-start">
       <h3>🚀 快速开始</h3>
       <p>一行命令，立即体验智能编程</p>
-      <pre><code>npm install -g @tencent-ai/codebuddy-code
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-language">
+            <span>📦</span>
+            <span>安装命令</span>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)" data-code="npm install -g @tencent-ai/codebuddy-code&#10;codebuddy">
+            复制
+          </button>
+        </div>
+        <pre class="has-header"><code>npm install -g @tencent-ai/codebuddy-code
 codebuddy</code></pre>
+      </div>
     </div>
 
     <div class="section">
       <h2>✨ 主要功能</h2>
       <div class="grid">
-        <div class="card">
+        <div class="card featured">
           <div class="feature-icon">🤖</div>
           <h3>智能编程助手</h3>
           <ul>
@@ -87,26 +120,59 @@ codebuddy</code></pre>
 
     <div class="section">
       <h2>🎯 使用场景</h2>
-      <div class="grid">
+      <div class="grid grid-3">
         <div class="card">
-          <h3>日常开发</h3>
-          <pre><code>codebuddy "帮我优化这个函数的性能"
+          <h3>💻 日常开发</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-language">
+                <span>⚡</span>
+                <span>开发命令</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)" data-code='codebuddy "帮我优化这个函数的性能"&#10;codebuddy "为这个组件添加错误处理"&#10;codebuddy "生成这个 API 的单元测试"'>
+                复制
+              </button>
+            </div>
+            <pre class="has-header"><code>codebuddy "帮我优化这个函数的性能"
 codebuddy "为这个组件添加错误处理"
 codebuddy "生成这个 API 的单元测试"</code></pre>
+          </div>
         </div>
         
         <div class="card">
-          <h3>代码审查</h3>
-          <pre><code>codebuddy "检查这次提交的代码质量"
+          <h3>🔍 代码审查</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-language">
+                <span>🛡️</span>
+                <span>审查命令</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)" data-code='codebuddy "检查这次提交的代码质量"&#10;codebuddy "分析潜在的安全问题"&#10;codebuddy "建议代码改进方案"'>
+                复制
+              </button>
+            </div>
+            <pre class="has-header"><code>codebuddy "检查这次提交的代码质量"
 codebuddy "分析潜在的安全问题"
 codebuddy "建议代码改进方案"</code></pre>
+          </div>
         </div>
         
         <div class="card">
-          <h3>学习与探索</h3>
-          <pre><code>codebuddy "解释这个算法的实现原理"
+          <h3>📚 学习与探索</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-language">
+                <span>🎓</span>
+                <span>学习命令</span>
+              </div>
+              <button class="copy-btn" onclick="copyCode(this)" data-code='codebuddy "解释这个算法的实现原理"&#10;codebuddy "这个设计模式在项目中如何使用"&#10;codebuddy "推荐适合的第三方库"'>
+                复制
+              </button>
+            </div>
+            <pre class="has-header"><code>codebuddy "解释这个算法的实现原理"
 codebuddy "这个设计模式在项目中如何使用"
 codebuddy "推荐适合的第三方库"</code></pre>
+          </div>
         </div>
       </div>
     </div>
@@ -115,12 +181,227 @@ codebuddy "推荐适合的第三方库"</code></pre>
   <footer>
     <div class="footer-flag"></div>
     <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>产品</h4>
+          <ul>
+            <li><a href="index.html">CodeBuddy Code</a></li>
+            <li><a href="docs.html">使用文档</a></li>
+            <li><a href="slash.html">斜杠命令</a></li>
+            <li><a href="#quick-start">快速开始</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>支持</h4>
+          <ul>
+            <li><a href="support.html">帮助中心</a></li>
+            <li><a href="mailto:codebuddy@tencent.com">联系我们</a></li>
+            <li><a href="support.html#security">安全政策</a></li>
+            <li><a href="support.html#privacy">隐私保护</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>开发者</h4>
+          <ul>
+            <li><a href="https://github.com/tencent-cloud/codebuddy" target="_blank">GitHub</a></li>
+            <li><a href="https://www.npmjs.com/package/@tencent-ai/codebuddy-code" target="_blank">NPM</a></li>
+            <li><a href="docs.html#api">API 文档</a></li>
+            <li><a href="docs.html#changelog">更新日志</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>腾讯云</h4>
+          <ul>
+            <li><a href="https://cloud.tencent.com/" target="_blank">腾讯云官网</a></li>
+            <li><a href="https://cloud.tencent.com/product/ai" target="_blank">AI 产品</a></li>
+            <li><a href="https://cloud.tencent.com/developer" target="_blank">开发者中心</a></li>
+            <li><a href="https://cloud.tencent.com/document" target="_blank">技术文档</a></li>
+          </ul>
+        </div>
+      </div>
+      
       <div class="ukraine-statement">
         <h4>🇺🇦 支持乌克兰，谴责侵略</h4>
         <p>我们坚决支持乌克兰人民，强烈谴责俄罗斯的非法侵略战争和在乌克兰犯下的战争罪行。和平、主权和国际法必须得到尊重。</p>
       </div>
-      <p>© 2025 Tencent Cloud • 由腾讯云团队开发维护</p>
+      
+      <div class="footer-bottom">
+        <div class="footer-links">
+          <a href="support.html#terms">服务条款</a>
+          <a href="support.html#privacy">隐私政策</a>
+          <a href="support.html#cookies">Cookie 政策</a>
+          <a href="support.html#security">安全声明</a>
+        </div>
+        <p>© 2025 Tencent Cloud • 由腾讯云团队开发维护 • 版权所有</p>
+      </div>
     </div>
   </footer>
+  
+  <!-- 返回顶部按钮 -->
+  <button class="back-to-top" onclick="scrollToTop()" data-tooltip="返回顶部">
+    ↑
+  </button>
+
+  <!-- 通知容器 -->
+  <div id="notification" class="notification"></div>
+
+  <script>
+    // 主题切换功能
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('theme-icon');
+      const currentTheme = body.getAttribute('data-theme');
+      
+      if (currentTheme === 'dark') {
+        body.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // 初始化主题
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const themeIcon = document.getElementById('theme-icon');
+      
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+      } else {
+        themeIcon.textContent = '🌙';
+      }
+    }
+
+    // 代码复制功能
+    function copyCode(button) {
+      const code = button.getAttribute('data-code').replace(/&#10;/g, '\n');
+      
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = button.textContent;
+        button.textContent = '已复制';
+        button.classList.add('copied');
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('copied');
+        }, 2000);
+        
+        showNotification('代码已复制到剪贴板', 'success');
+      }).catch(() => {
+        showNotification('复制失败，请手动复制', 'error');
+      });
+    }
+
+    // 显示通知
+    function showNotification(message, type = 'info') {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.className = `notification ${type} show`;
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    // 返回顶部功能
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // 显示/隐藏返回顶部按钮
+    function toggleBackToTop() {
+      const backToTop = document.querySelector('.back-to-top');
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    }
+
+    // 平滑滚动到锚点
+    function smoothScrollToAnchor() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    }
+
+    // 添加滚动动画
+    function addScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      document.querySelectorAll('.card, .section').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+      });
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      initTheme();
+      smoothScrollToAnchor();
+      addScrollAnimations();
+      
+      // 监听滚动事件
+      window.addEventListener('scroll', toggleBackToTop);
+      
+      // 监听系统主题变化
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          const themeIcon = document.getElementById('theme-icon');
+          if (e.matches) {
+            document.body.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+          } else {
+            document.body.removeAttribute('data-theme');
+            themeIcon.textContent = '🌙';
+          }
+        }
+      });
+    });
+
+    // 键盘快捷键
+    document.addEventListener('keydown', function(e) {
+      // Ctrl/Cmd + K 快速搜索（未来功能）
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        showNotification('搜索功能即将推出', 'info');
+      }
+      
+      // Escape 关闭通知
+      if (e.key === 'Escape') {
+        const notification = document.getElementById('notification');
+        notification.classList.remove('show');
+      }
+    });
+  </script>
 </body>
 </html>
