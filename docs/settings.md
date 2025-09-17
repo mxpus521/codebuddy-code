@@ -8,8 +8,8 @@ CodeBuddy Code 使用分层配置系统，设置按以下优先级合并（后�
 
 ```
 命令行参数 (最高优先级)
-├── 项目本地设置 (./settings.local.json)
-├── 项目共享设置 (./settings.json)  
+├── 项目本地设置 (./.codebuddy/settings.local.json)
+├── 项目共享设置 (./.codebuddy/settings.json)  
 └── 用户设置 (~/.codebuddy/settings.json) (最低优先级)
 ```
 
@@ -18,8 +18,8 @@ CodeBuddy Code 使用分层配置系统，设置按以下优先级合并（后�
 | 级别 | 文件路径 | 用途 | 版本控制 |
 |------|----------|------|----------|
 | **用户级** | `~/.codebuddy/settings.json` | 个人偏好设置 | 不提交 |
-| **项目共享** | `./settings.json` | 团队共享配置 | 提交到 Git |
-| **项目本地** | `./settings.local.json` | 个人项目设置 | 不提交 (添加到 .gitignore) |
+| **项目共享** | `./.codebuddy/settings.json` | 团队共享配置 | 提交到 Git |
+| **项目本地** | `./.codebuddy/settings.local.json` | 个人项目设置 | 不提交 (添加到 .gitignore) |
 
 ### 配置作用域说明
 
@@ -129,6 +129,22 @@ CodeBuddy Code 使用细粒度权限系统控制工具访问：
 | `plan` | 仅制定计划，不执行操作 |
 | `bypassPermissions` | 绕过权限检查（谨慎使用） |
 
+#### 动态权限模式管理
+
+从当前版本开始，权限模式支持会话级动态切换：
+
+- **CLI 启动时设置**: 使用 `--permission-mode` 参数指定初始权限模式
+- **运行时动态更新**: 权限模式会在会话中动态更新，并在UI中实时显示当前状态
+- **优先级顺序**: CLI参数 > 设置文件中的 `defaultMode` > 系统默认值(`default`)
+- **UI 状态显示**: 当权限模式不是 `default` 时，会在界面中显示当前权限模式状态
+
+```bash
+# 启动时设置权限模式
+codebuddy --permission-mode acceptEdits
+
+# 权限模式会在会话中保持，并可通过UI查看当前状态
+```
+
 ### MCP 服务器管理
 
 控制 Model Context Protocol (MCP) 服务器的启用和禁用：
@@ -215,15 +231,21 @@ codebuddy config get permissions
 
 #### 设置配置
 ```bash
-# 设置简单值
+# 设置项目级模型（不需要 -g 标志）
 codebuddy config set model gpt-5
 
-# 使用全局选项
+# 设置全局模型（需要 -g 标志）
 codebuddy config set -g model gpt-4
 
-# 设置复杂对象（使用 JSON 字符串）
+# 设置项目级权限配置（不需要 -g 标志）
 codebuddy config set permissions '{"allow": ["Read", "Edit"], "deny": ["Bash(rm:*)"]}'
+
+# 设置项目级环境变量（不需要 -g 标志）
 codebuddy config set env '{"NODE_ENV": "development", "DEBUG": "true"}'
+
+# 设置全局专用配置（需要 -g 标志）
+codebuddy config set -g cleanupPeriodDays 30
+codebuddy config set -g includeCoAuthoredBy false
 ```
 
 #### 数组操作
@@ -237,21 +259,39 @@ codebuddy config remove model
 
 ### 支持的配置键
 
-根据代码实现和测试，目前通过 CLI 可操作的配置键有限：
+根据代码实现，配置键按作用域分为两类：
 
-| 配置键 | 类型 | CLI 支持 | 描述 |
-|--------|------|----------|------|
-| `model` | string | ✅ | AI 模型设置 |
-| `permissions` | object | ✅ | 权限配置 |
-| `env` | object | ✅ | 环境变量 |
-| `apiKeyHelper` | string | ✅ | API 密钥助手脚本 |
-| `cleanupPeriodDays` | number | ❌ | 清理周期（只读） |
-| `includeCoAuthoredBy` | boolean | ❌ | Git 协作者（只读） |
-| `hooks` | object | ❌ | 工具执行钩子（只读） |
-| `statusLine` | object | ❌ | 状态行配置（只读） |
-| MCP 相关配置 | various | ❌ | 通过 MCP 命令管理 |
+#### 全局配置键（需要 `-g/--global` 标志）
 
-> **注意**: 如果尝试操作不支持的配置键，会收到错误提示：`Cannot operate settings 'key'. Only these keys can be operate: permissions,model,env,apiKeyHelper`
+| 配置键 | 类型 | 描述 |
+|--------|------|------|
+| `model` | string | AI 模型设置 |
+| `cleanupPeriodDays` | number | 本地聊天记录保留天数 |
+| `env` | object | 环境变量 |
+| `includeCoAuthoredBy` | boolean | Git 提交是否包含 co-authored-by |
+| `permissions` | object | 权限配置 |
+| `hooks` | object | 工具执行钩子 |
+| `statusLine` | object | 状态行配置 |
+| `enableAllProjectMcpServers` | boolean | 自动启用所有项目 MCP 服务器 |
+| `enabledMcpjsonServers` | string[] | 启用的 MCP 服务器列表 |
+| `disabledMcpjsonServers` | string[] | 禁用的 MCP 服务器列表 |
+| `autoCompactEnabled` | boolean | 自动压缩功能 |
+| `autoUpdates` | boolean | 自动更新设置 |
+| `apiKeyHelper` | string | API 密钥助手脚本路径 |
+
+#### 项目配置键（可在项目级设置）
+
+| 配置键 | 类型 | 描述 |
+|--------|------|------|
+| `permissions` | object | 权限配置 |
+| `model` | string | AI 模型设置 |
+| `env` | object | 环境变量 |
+| `apiKeyHelper` | string | API 密钥助手脚本路径 |
+
+> **注意**: 
+> - 全局配置键只能使用 `-g/--global` 标志设置到用户级配置
+> - 项目配置键可以在项目级设置，不需要 `-g` 标志
+> - 如果尝试在错误的作用域设置配置键，会收到相应的错误提示
 
 ### 完整示例
 
@@ -259,22 +299,35 @@ codebuddy config remove model
 # 查看当前所有配置
 codebuddy config list
 
-# 设置默认模型
-codebuddy config set model gpt-5
+# 设置全局默认模型（需要 -g 标志）
+codebuddy config set -g model gpt-5
 
-# 配置权限系统
-codebuddy config set permissions '{
+# 设置项目级模型（不需要 -g 标志）
+codebuddy config set model gpt-4
+
+# 配置全局权限系统（需要 -g 标志）
+codebuddy config set -g permissions '{
   "allow": ["Read", "Edit", "Bash(git:*)"],
   "deny": ["Bash(rm:*)", "Bash(sudo:*)"],
   "defaultMode": "default"
 }'
 
-# 设置环境变量
+# 设置项目级环境变量（不需要 -g 标志）
 codebuddy config set env '{
   "NODE_ENV": "development",
+  "DEBUG": "myapp:*"
+}'
+
+# 设置全局环境变量（需要 -g 标志）
+codebuddy config set -g env '{
   "DEBUG": "codebuddy:*",
   "API_URL": "https://api.example.com"
 }'
+
+# 设置全局配置项（需要 -g 标志）
+codebuddy config set -g cleanupPeriodDays 7
+codebuddy config set -g includeCoAuthoredBy true
+codebuddy config set -g autoUpdates false
 
 # 验证设置
 codebuddy config get model
@@ -285,7 +338,7 @@ codebuddy config get permissions
 
 ### 团队协作配置
 
-**项目共享配置** (`./settings.json`):
+**项目共享配置** (`./.codebuddy/settings.json`):
 ```json
 {
   "model": "gpt-5",
@@ -299,7 +352,7 @@ codebuddy config get permissions
 }
 ```
 
-**个人本地配置** (`./settings.local.json`):
+**个人本地配置** (`./.codebuddy/settings.local.json`):
 ```json
 {
   "model": "gpt-4",
