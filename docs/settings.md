@@ -108,6 +108,11 @@ CodeBuddy Code 使用细粒度权限系统控制工具访问：
       "Bash(npm:install,npm:test)",    // 允许特定 npm 命令
       "Edit(src/**/*.js)"              // 只允许编辑 src 目录下的 JS 文件
     ],
+    "ask": [
+      "Bash(curl:*)",                  // 询问后允许 curl 命令
+      "WebFetch",                      // 询问后允许网络请求
+      "Bash(docker:*)"                 // 询问后允许 Docker 命令
+    ],
     "deny": [
       "Bash(rm:*)",                    // 禁止删除命令
       "Bash(sudo:*)",                  // 禁止 sudo 命令
@@ -174,22 +179,59 @@ CodeBuddy Code 支持通过环境变量进行配置。
 | 环境变量 | 描述 |
 |----------|------|
 | `CODEBUDDY_AUTH_TOKEN` | CodeBuddy 认证令牌 |
+| `CODEBUDDY_API_KEY` | API 密钥，用于请求认证 |
+| `CODEBUDDY_CUSTOM_HEADERS` | 自定义 HTTP 请求头，支持多行格式 |
 
 ### 运行环境
 
 | 环境变量 | 描述 |
 |----------|------|
+| `CODEBUDDY_BASE_URL` | 自定义 CodeBuddy 服务的基础 URL 地址 |
 | `CODEBUDDY_INTERNET_ENVIRONMENT` | 网络环境配置 |
 | `ENV_PRODUCT_CLI_ACCOUNT_TYPE` | CLI 账户类型 |
 
+### 代理配置
+
+| 环境变量 | 描述 |
+|----------|------|
+| `HTTP_PROXY` | HTTP 代理服务器地址（例如: `http://proxy.example.com:8080`） |
+| `HTTPS_PROXY` | HTTPS 代理服务器地址（例如: `https://proxy.example.com:8080`） |
+
 ### 使用示例
+
+#### 基础认证配置
 
 ```bash
 # 设置认证令牌
 export CODEBUDDY_AUTH_TOKEN="your-auth-token"
 
+# 设置 API 密钥
+export CODEBUDDY_API_KEY="your-api-key"
+
+# 设置代理服务器
+export HTTP_PROXY="http://proxy.example.com:8080"
+export HTTPS_PROXY="https://proxy.example.com:8080"
+
+# 设置自定义请求头
+export CODEBUDDY_CUSTOM_HEADERS="X-Custom-Header: value1
+X-Another-Header: value2"
+
 # 启动 CodeBuddy
 codebuddy
+```
+
+#### 使用 OpenRouter 自定义模型
+
+```bash
+# 使用 OpenRouter 服务，一行命令启动自定义模型
+CODEBUDDY_API_KEY=sk-or-v1-9a951951428092casdffs702bsdf2513c292680cd621b9d0e39cf \
+CODEBUDDY_BASE_URL=https://openrouter.ai/api/v1 \
+codebuddy --model openai/gpt-5-codex
+
+# 或者先设置环境变量
+export CODEBUDDY_API_KEY="sk-or-v1-your-openrouter-api-key"
+export CODEBUDDY_BASE_URL="https://openrouter.ai/api/v1"
+codebuddy --model openai/gpt-5-codex
 ```
 
 ## 🔧 配置管理命令
@@ -344,6 +386,7 @@ codebuddy config get permissions
   "model": "gpt-5",
   "permissions": {
     "allow": ["Read", "Edit", "Bash(git:*)", "Bash(npm:*)"],
+    "ask": ["WebFetch", "Bash(docker:*)"],
     "deny": ["Bash(rm:*)", "Bash(sudo:*)"]
   },
   "env": {
@@ -370,11 +413,11 @@ codebuddy config get permissions
 {
   "permissions": {
     "allow": ["Read", "Edit(src/**)", "Bash(git:status,git:diff)"],
+    "ask": ["WebFetch", "Bash(curl:*)"],
     "deny": [
       "Edit(**/*.env)",
       "Edit(**/*.key)",
       "Edit(**/*.pem)",
-      "Bash(curl:*)",
       "Bash(wget:*)",
       "Read(/etc/**)",
       "Read(~/.ssh/**)"
