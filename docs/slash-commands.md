@@ -15,15 +15,18 @@ CodeBuddy Code 支持斜杠命令,允许您在聊天中执行特殊操作、管�
 | `/doctor` | ✅ 支持 | 检查 CodeBuddy Code 的状态和环境。 |
 | `/status` | ✅ 支持 | 显示当前仓库和会话的状态。 |
 | `/add-dir` | ✅ 支持 | 提示时添加目录内容。 |
-| `/agents` | ❌ 暂不支持 | 管理实验性 AI 智能体 |
+| `/agents` | ✅ 支持 | 管理实验性 AI 智能体 |
 | `/compact`| ✅ 支持 | 压缩上下文。 |
 | `/config`| ✅ 支持 | 查看或修改本地配置。 |
 | `/cost` | ✅ 支持 | 显示会话的成本和 Token 使用情况。 |
 | `/init` | ✅ 支持 | 初始化一个新的 CodeBuddy 存储库。 |
 | `/mcp` | ✅ 支持 | 管理 MCP 连接。 |
-| `/memory`| ❌ 暂不支持 | 管理长期记忆 |
+| `/memory`| ✅ 支持 | 管理长期记忆 |
 | `/model` | ✅ 支持 | 切换或查看当前使用的 AI 模型。 |
+| `/permissions` | ✅ 支持 | 管理工具权限和工作区目录访问权限。 |
 | `/upgrade` | ✅ 支持 | 在浏览器中打开升级页面，查看高级功能和订阅选项。 |
+| `/bashes` | ✅ 支持 | 列出和管理后台任务。 |
+| `/terminal-setup` | ✅ 支持 | 配置 Shift+Enter 快捷键绑定，用于在输入框中插入换行符。 |
 
 ---
 
@@ -39,6 +42,19 @@ CodeBuddy Code 支持斜杠命令,允许您在聊天中执行特殊操作、管�
 2.  **个人全局命令**: 在您的用户主目录下创建 `~/.codebuddy/commands/` 文件夹。此处的命令在您所有的项目中都可用。
 
 创建一个命令,只需在上述任一目录中添加一个 `.md` 文件即可。例如,`test.md` 文件会自动注册为 `/test` 命令。
+
+#### 子目录中的命令命名
+
+您可以在 `commands/` 目录下创建子目录来组织您的命令。子目录中的命令会使用冒号分隔的层级命名结构：
+
+- `commands/test.md` → `/test`
+- `commands/frontend/build.md` → `/frontend:build`
+- `commands/backend/deploy/staging.md` → `/backend:deploy:staging`
+
+这种命名方式让您可以：
+- 按功能模块组织命令（如 `frontend`、`backend`、`database` 等）
+- 创建层级化的命令结构
+- 避免命名冲突，提高命令的可维护性
 
 ### Frontmatter 与元数据
 
